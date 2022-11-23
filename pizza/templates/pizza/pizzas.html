@@ -1,0 +1,37 @@
+{% extends 'pizza/base.html' %}
+
+
+{% block 'body' %}
+
+<div class="container">
+
+
+
+<h1>Order Pizzas</h1>
+<h2>{{ note }}</h2>
+
+
+
+{% if created_pizza_pks %}
+Your pizzas ids are {{ created_pizza_pks }}.<br>
+{% for created_pizza_pk in created_pizza_pks %}
+<a href="{% url 'edit_order' created_pizza_pk %}" target="_blank">Edit Pizza No. {{ created_pizza_pk }}?<br></a>
+{% endfor %}
+{% endif %}
+
+
+
+<form action="{% url 'pizzas' %}" method="post">
+    {% csrf_token %}
+    {{ formset.management_form }}
+
+    {% for form in formset %}
+    {{ form }}
+    <br><br>
+    {% endfor %}
+    <input type="submit" value="Order Pizzas">
+</form>
+
+</div>
+
+{% endblock %}
